@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Reclamo;
+use App\Models\Cliente;
+use App\Models\Producto;
+use Illuminate\Http\Request;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+class ClaimController extends Controller
+{
+    public function store(Request $request)
+    {
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'cliente' => 'required|string|max:255',
+            'correo' => 'required|email',
+            'producto' => 'required|string',
+            'fecha_reclamo' => 'required|date',
+            'descripcion' => 'required|string',
+        ]);
+
+        // Buscar o crear el cliente basado en su nombre y correo
+        $cliente = Cliente::firstOrCreate(
+            ['nombre' => $validatedData['cliente']],
+            ['correo' => $validatedData['correo']]
+        );
+
+        // Buscar el producto basado en su nombre
+        $producto = Producto::where('nombre', $validatedData['producto'])->first();
+
+        // Crear un nuevo reclamo en la base de datos
+        $claim = Reclamo::create([
+            'clienteID' => $cliente->clienteID,
+            'productoID' => $producto->productoID,
+            'fechaReclamo' => $validatedData['fecha_reclamo'],
+            'descripcion' => $validatedData['descripcion'],
+            'modoRespuesta' => 'correo', // Por defecto, puedes cambiar según las necesidades
+            'estado' => 'pendiente', // Por defecto, reclamo está pendiente
+        ]);
+
+        // Enviar el correo electrónico usando PHPMailer
+        $this->sendMail($claim, $cliente, $producto);
+
+        return redirect()->back()->with('success', 'Reclamo enviado exitosamente.');
+    }
+
+    protected function sendMail($claim, $cliente, $producto)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configuración del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; // Reemplaza con tu servidor SMTP
+            $mail->SMTPAuth = true;
+            $mail->Username = 'giancarlo.silva550@gmail.com'; // Reemplaza con tu correo
+            $mail->Password = 'exhveejndgwvlbvq'; // Reemplaza con tu contraseña
+            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->SMTPSecure = "ssl";
+            $mail->Port = 587;
+
+            // Configuración del correo
+            $mail->setFrom('giancarlo.silva550@gmail.com', 'Veterinaria');
+            $mail->addAddress('giancarlosilvagutierrez55@gmail.com'); // Reemplaza con el correo del receptor
+
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = 'Nuevo Reclamo de Cliente';
+            $mail->Body = "
+                <h1>Nuevo Reclamo</h1>
+                <p><strong>Cliente:</strong> {$cliente->nombre}</p>
+                <p><strong>Correo:</strong> {$cliente->correo}</p>
+                <p><strong>Producto:</strong> {$producto->nombre}</p>
+                <p><strong>Fecha de Reclamo:</strong> {$claim->fechaReclamo}</p>
+                <p><strong>Descripción:</strong> {$claim->descripcion}</p>
+            ";
+
+            $mail->send();
+        } catch (Exception $e) {
+            // Manejo de errores
+            return back()->with('error', 'El correo no pudo ser enviado: ' . $e->getMessage());
+        }
+    }
+}
