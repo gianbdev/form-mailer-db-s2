@@ -26,3 +26,28 @@
 .close-button:hover {
     color: #a94442;
 }
+
+.hero-section {
+    background: url('https://source.unsplash.com/1600x900/?pets,veterinary') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+.feature-item {
+    text-align: center;
+}

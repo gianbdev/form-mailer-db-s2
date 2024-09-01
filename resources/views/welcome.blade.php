@@ -9,111 +9,142 @@
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header class="bg-primary text-white text-center py-5">
-        <h1>Bienvenido a nuestra Veterinaria</h1>
-        <p>Comprometidos con el cuidado y bienestar de tus mascotas</p>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <img src="{{ asset('img/clinica-banner.jpg') }}" alt="Banner de la Clínica" class="img-fluid mb-4">
+            <h1>Tu Compañero Ideal para el Cuidado de Mascotas</h1>
+            <p>Conoce nuestros servicios y cómo podemos ayudarte a mantener a tus mascotas felices y saludables.</p>
+            <a href="#contact-form" class="btn btn-light btn-lg">Contáctanos</a>
+        </div>
     </header>
 
-    <!-- Main Content Section -->
-    <main class="container my-5">
-        <section class="mb-5">
-            <h2>Sobre Nosotros</h2>
-            <p>Ofrecemos los mejores servicios veterinarios para que tus mascotas se mantengan saludables y felices. Nuestro equipo está compuesto por profesionales dedicados y apasionados por los animales.</p>
-        </section>
-
-        <section class="mb-5">
-            <h2>Nuestros Servicios</h2>
-            <ul>
-                <li>Consultas veterinarias</li>
-                <li>Vacunación y desparasitación</li>
-                <li>Cirugías</li>
-                <li>Estética y peluquería para mascotas</li>
-                <li>Venta de productos especializados</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Formulario de Reclamo</h2>
-            <p>Si tienes algún inconveniente con nuestros servicios o productos, por favor llena el siguiente formulario:</p>
-
-            @if (session('success'))
-                <div id="success-message" class="alert alert-success">
-                    {{ session('success') }}
-                    <button id="close-success" class="close-button" aria-label="Close">&times;</button>
+   <!-- Features Section -->
+    <section class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="feature-item">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <h3>Atención Personalizada</h3>
+                    <p>Recibe el mejor cuidado para tus mascotas con una atención personalizada y dedicada.</p>
                 </div>
-            @endif
-
-            @if (session('error'))
-                <div id="error-message" class="alert alert-danger">
-                    {{ session('error') }}
-                    <button id="close-error" class="close-button" aria-label="Close">&times;</button>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-item">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-paw"></i>
+                    </div>
+                    <h3>Servicios Completos</h3>
+                    <p>Desde consultas hasta cirugías, ofrecemos todos los servicios necesarios para la salud de tus mascotas.</p>
                 </div>
-            @endif
-
-            <form action="{{ route('reclamos.store') }}" method="POST" class="needs-validation" novalidate>
-                @csrf
-
-                <div class="mb-3">
-                    <label for="tipo_reclamo" class="form-label">Tipo de Reclamo</label>
-                    <select class="form-select" id="tipo_reclamo" name="tipo_reclamo" required>
-                        <option value="" disabled selected>Selecciona una opción</option>
-                        <option value="servicio">Servicio</option>
-                        <option value="producto">Producto</option>
-                        <option value="otros">Otros</option>
-                    </select>
-                    <div class="invalid-feedback">Por favor, selecciona un tipo de reclamo.</div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-item">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-box"></i>
+                    </div>
+                    <h3>Productos Especializados</h3>
+                    <p>Encuentra productos de alta calidad para el cuidado y bienestar de tus mascotas.</p>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="mb-3">
-                    <label for="cliente" class="form-label">Nombre del Cliente</label>
-                    <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Ingresa tu nombre" required>
-                    <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
-                </div>
+    <!-- About Us Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center">Sobre Nosotros</h2>
+            <p class="text-center">Ofrecemos los mejores servicios veterinarios para que tus mascotas se mantengan saludables y felices. Nuestro equipo está compuesto por profesionales dedicados y apasionados por los animales.</p>
+        </div>
+    </section>
 
-                <div class="mb-3">
-                    <label for="correo_cliente" class="form-label">Correo del Cliente</label>
-                    <input type="email" class="form-control" id="correo_cliente" name="correo_cliente" placeholder="Ingresa tu correo" required>
-                    <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
-                </div>
+    <!-- Services Section -->
+    <section class="container my-5">
+        <h2 class="text-center">Nuestros Servicios</h2>
+        <ul class="list-unstyled text-center">
+            <li>Consultas veterinarias</li>
+            <li>Vacunación y desparasitación</li>
+            <li>Cirugías</li>
+            <li>Estética y peluquería para mascotas</li>
+            <li>Venta de productos especializados</li>
+        </ul>
+    </section>
 
-                <div class="mb-3">
-                    <label for="telefono_cliente" class="form-label">Teléfono del Cliente</label>
-                    <input type="text" class="form-control" id="telefono_cliente" name="telefono_cliente" placeholder="Ingresa tu teléfono (opcional)">
-                </div>
+    <section class="container my-5">
+        <h2>Formulario de Reclamo</h2>
+        <p>Si tienes algún inconveniente con nuestros servicios o productos, por favor llena el siguiente formulario:</p>
 
-                <div class="mb-3">
-                    <label for="dni_cliente" class="form-label">DNI del Cliente</label>
-                    <input type="text" class="form-control" id="dni_cliente" name="dni_cliente" placeholder="Ingresa tu DNI (opcional)">
-                </div>
+        @if (session('success'))
+            <div id="success-message" class="alert alert-success">
+                {{ session('success') }}
+                <button id="close-success" class="close-button" aria-label="Close">&times;</button>
+            </div>
+        @endif
 
-                <div class="mb-3">
-                    <label for="producto" class="form-label">Producto</label>
-                    <select class="form-select" id="producto" name="producto" required>
-                        <option value="" disabled selected>Selecciona un producto</option>
-                        @foreach($productos as $producto)
-                            <option value="{{ $producto->productoID }}">{{ $producto->nombre }}</option>
-                        @endforeach
-                    </select>
-                    <div class="invalid-feedback">Por favor, selecciona un producto.</div>
-                </div>
+        @if (session('error'))
+            <div id="error-message" class="alert alert-danger">
+                {{ session('error') }}
+                <button id="close-error" class="close-button" aria-label="Close">&times;</button>
+            </div>
+        @endif
 
-                <div class="mb-3">
-                    <label for="fecha_reclamo" class="form-label">Fecha de Reclamo</label>
-                    <input type="date" class="form-control" id="fecha_reclamo" name="fecha_reclamo" required>
-                    <div class="invalid-feedback">Por favor, selecciona una fecha.</div>
-                </div>
+        <form action="{{ route('reclamos.store') }}" method="POST" class="needs-validation" novalidate>
+            @csrf
 
-                <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción del Reclamo</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Describe tu reclamo aquí" required></textarea>
-                    <div class="invalid-feedback">Por favor, ingresa una descripción.</div>
-                </div>
+            <div class="mb-3">
+                <label for="tipo_reclamo" class="form-label">Tipo de Reclamo</label>
+                <select class="form-select" id="tipo_reclamo" name="tipo_reclamo" required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="servicio">Servicio</option>
+                    <option value="producto">Producto</option>
+                    <option value="otros">Otros</option>
+                </select>
+                <div class="invalid-feedback">Por favor, selecciona un tipo de reclamo.</div>
+            </div>
 
-                <button type="submit" class="btn btn-primary">Enviar Reclamo</button>
-            </form>
-        </section>
-    </main>
+            <div class="mb-3">
+                <label for="cliente" class="form-label">Nombre del Cliente</label>
+                <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Ingresa tu nombre" required>
+                <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+            </div>
+            <div class="mb-3">
+                <label for="correo_cliente" class="form-label">Correo del Cliente</label>
+                <input type="email" class="form-control" id="correo_cliente" name="correo_cliente" placeholder="Ingresa tu correo" required>
+                <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+            </div>
+            <div class="mb-3">
+                <label for="telefono_cliente" class="form-label">Teléfono del Cliente</label>
+                <input type="text" class="form-control" id="telefono_cliente" name="telefono_cliente" placeholder="Ingresa tu teléfono (opcional)">
+            </div>
+            <div class="mb-3">
+                <label for="dni_cliente" class="form-label">DNI del Cliente</label>
+                <input type="text" class="form-control" id="dni_cliente" name="dni_cliente" placeholder="Ingresa tu DNI (opcional)">
+            </div>
+            <div class="mb-3">
+                <label for="producto" class="form-label">Producto</label>
+                <select class="form-select" id="producto" name="producto" required>
+                    <option value="" disabled selected>Selecciona un producto</option>
+                    @foreach($productos as $producto)
+                        <option value="{{ $producto->productoID }}">{{ $producto->nombre }}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback">Por favor, selecciona un producto.</div>
+            </div>
+            <div class="mb-3">
+                <label for="fecha_reclamo" class="form-label">Fecha de Reclamo</label>
+                <input type="date" class="form-control" id="fecha_reclamo" name="fecha_reclamo" required>
+                <div class="invalid-feedback">Por favor, selecciona una fecha.</div>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción del Reclamo</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Describe tu reclamo aquí" required></textarea>
+                <div class="invalid-feedback">Por favor, ingresa una descripción.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Reclamo</button>
+        </form>
+    </section>
 
     <!-- Footer Section -->
     <footer class="bg-light text-center py-4">
